@@ -1,0 +1,48 @@
+{% extends "base.html" %}{% load i18n %}{% load static %}
+
+{% block wtitle %}Résumé de la livraison #{{ delivery.id }}{% endblock %}
+
+{% block head %}
+	<style type="text/css">
+		html {
+			margin: 10px;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+	<main>
+		<h1>Livraison {{ delivery.id }}</h1>
+		<div>Date : {{ delivery.delivery_date|date:'Y-m-d' }}</div>
+		<br/>
+		{% if ordered %}
+			<table>
+				<thead>
+					<tr>
+						<th>Description</th>
+						<th>Prix unitaire</th>
+						<th>Quantité</th>
+						<th>Montant</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for opt in ordered.values %}
+						<tr>
+							<td>{{ opt.label }}</td>
+							<td class="text-right">{{ opt.price }} €</td>
+							<td class="text-right">{{ opt.quantity }}</td>
+							<td class="text-right">{{ opt.total }} €</td>
+						</tr>
+					{% endfor %}
+					<tr>
+						<td colspan="2"></td>
+						<th class="text-right">Total</th>
+						<th class="text-right">{{ total }} €</th>
+					</tr>
+				</tbody>
+			</table>
+		{% else %}
+			<i>Pas de produits commandés pour cette livraison.</i>
+		{% endif %}
+	</main>
+{% endblock %}

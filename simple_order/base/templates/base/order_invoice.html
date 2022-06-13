@@ -1,0 +1,70 @@
+{% extends "base.html" %}{% load i18n %}{% load static %}
+
+{% block wtitle %}Facture de la commande #{{ order.id }}{% endblock %}
+
+{% block head %}
+	<style type="text/css">
+		html {
+			margin: 10px;
+		}
+		.section {
+			padding: 20px;
+			margin-top: 30px;
+			vertical-align: top;
+			display: inline-block;
+			border: 1px solid #666;
+			border-radius: 5px;
+		}
+		.section + .section {
+			margin-left: 50px;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+	<main>
+		<h1>Commande {{ order.id }}</h1>
+		<div>Date : {{ order.mod_date|date:'Y-m-d' }}</div>
+		<div>
+			<div class="section">
+				<b>{{ owner_name }}</b>
+				<div>{{ owner_address|linebreaksbr }}</div>
+			</div>
+			<div class="section">
+				<b>{{ order.customer.name }}</b>
+				<div>{{ order.customer.address|linebreaksbr }}</div>
+			</div>
+		</div>
+		<div class="section">
+			{% if order.orderedproduct_set.all %}
+				<table>
+					<thead>
+						<tr>
+							<th>Description</th>
+							<th>Prix unitaire</th>
+							<th>Quantité</th>
+							<th>Montant</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for op in order.orderedproduct_set.all %}
+							<tr>
+								<td>{{ op.product.label }}</td>
+								<td class="text-right">{{ op.product.price }} €</td>
+								<td class="text-right">{{ op.quantity }}</td>
+								<td class="text-right">{{ op.total_price }} €</td>
+							</tr>
+						{% endfor %}
+						<tr>
+							<td colspan="2"></td>
+							<th class="text-right">Total</th>
+							<th class="text-right">{{ order.total_price }} €</th>
+						</tr>
+					</tbody>
+				</table>
+			{% else %}
+				<i>Pas de produits dans cette commande.</i>
+			{% endif %}
+		</div>
+	</main>
+{% endblock %}

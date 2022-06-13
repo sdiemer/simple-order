@@ -1,0 +1,35 @@
+{% extends "common.html" %}{% load i18n %}{% load static %}
+
+{% block title %}Livraisons{% endblock %}
+
+{% block main %}
+	<div>
+		<a href="{% url 'delivery_add' %}">Ajouter une livraison</a>
+		<br/>
+		<br/>
+	</div>
+	<table>
+		<thead>
+			<tr>
+				<th title="Identifiant de livraison">Id</th>
+				<th>Date de livraison</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for delivery in deliveries %}
+				<tr>
+					<td><a href="{{ delivery.get_absolute_url }}">#{{ delivery.id }}</a></td>
+					<td>{{ delivery.delivery_date }}</td>
+					<td>
+						<a href="{% url 'delivery_summary' delivery.id %}">Résumé</a>
+						<form method="delete" action="{{ delivery.get_absolute_url }}" class="inline">
+							{% csrf_token %}
+							<button type="submit" title="Supprimer"><i class="fa fa-trash"></i></button>
+						</form>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

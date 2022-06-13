@@ -1,0 +1,81 @@
+{% extends "common.html" %}{% load i18n %}{% load static %}
+
+{% block title %}Commandes{% endblock %}
+
+{% block main %}
+	{% if delivery %}
+		<div>
+			<fieldset>
+				<form method="get" action="." class="inline">
+					{{ delivery_form }}
+					<button type="submit" style="display: none;">Afficher</button>
+				</form>
+				<a href="{{ delivery.get_absolute_url }}" class="marged">Modifier la livraison</a>
+				<a href="{% url 'delivery_summary' delivery.id %}" class="marged">Résumé de la livraison</a>
+				<a href="{% url 'delivery_add' %}" class="marged">Ajouter une livraison</a>
+			</fieldset>
+			<br/>
+			<br/>
+		</div>
+		<div>
+			<a href="{% url 'order_add' %}">Ajouter une commande</a>
+			<br/>
+			<br/>
+		</div>
+		{% if orders %}
+			<table>
+				<thead>
+					<tr>
+						<th title="Identifiant de commande">Id</th>
+						<th>Client</th>
+						<th>Produits commandés</th>
+						<th>Prix total</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for order in orders %}
+						<tr>
+							<td><a href="{{ order.get_absolute_url }}">#{{ order.id }}</a></td>
+							<td>{{ order.customer.name }}</td>
+							<td>
+								{% if order.orderedproduct_set.all %}
+									{% for op in order.orderedproduct_set.all %}
+										<div>{{ op.quantity }} x {{ op.product.label }}</div>
+									{% endfor %}
+								{% endif %}
+							</td>
+							<td class="text-right">{{ order.total_price }} €</td>
+							<td>
+								<a href="{% url 'order_invoice' order.id %}">Facture</a>
+								<form method="delete" action="{{ order.get_absolute_url }}" class="inline">
+									{% csrf_token %}
+									<button type="submit" title="Supprimer"><i class="fa fa-trash"></i></button>
+								</form>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="2"></td>
+						<th class="text-right">Total</th>
+						<th class="text-right">{{ delivery.total_price }} €</th>
+						<td></td>
+					</tr>
+				</tfoot>
+			</table>
+		{% else %}
+			<div>
+				<i>Aucune commande pour cette livraison.</i>
+			</div>
+		{% endif %}
+	{% else %}
+		<div>
+			<i>Aucune livraison.</i>
+			<br/>
+			<br/>
+			<a href="{% url 'delivery_add' %}">Ajouter une livraison</a>
+		</div>
+	{% endif %}
+{% endblock %}

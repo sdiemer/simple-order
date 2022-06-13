@@ -1,0 +1,19 @@
+{% extends "common.html" %}{% load i18n %}{% load static %}
+
+{% block title %}Authentification{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function () {
+			document.getElementById('id_username').focus();
+		});
+	</script>
+{% endblock %}
+
+{% block main %}
+	<p>Vous devez vous authentifier pour accéder à cette page.</p>
+	<form method="post" action=".">{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit">Se connecter</button>
+	</form>
+{% endblock %}

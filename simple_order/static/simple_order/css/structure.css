@@ -1,0 +1,145 @@
+/* page structure */
+body {
+	margin: 0;
+	margin-left: 220px;
+	overflow: auto;
+}
+
+body > header,
+body > aside,
+body > footer {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: auto;
+	position: fixed;
+	width: 220px;
+	background: #eee;
+	color: #000;
+	text-align: center;
+}
+body > header {
+	bottom: auto;
+	height: 80px;
+	line-height: 80px;
+	background: #ccc;
+	font-size: 150%;
+}
+body > aside {
+	top: 80px;
+	bottom: 50px;
+	text-align: left;
+	overflow: auto;
+}
+body > footer {
+	padding: 5px 0;
+	top: auto;
+	height: 40px;
+	line-height: 20px;
+	background: #ccc;
+}
+
+header a {
+	color: #26f;
+	display: block;
+}
+header a:hover,
+header a:active {
+	color: #26f;
+	text-decoration: none;
+}
+
+aside a {
+	margin: 10px 0;
+	padding: 10px;
+	display: block;
+	color: #222;
+	border-left: 5px solid transparent;
+}
+aside a:hover {
+	color: #26f;
+	background-color: #fff;
+	text-decoration: none;
+	border-color: #ccc;
+}
+aside a.active {
+	color: #26f;
+	background-color: #fff;
+	font-weight: bold;
+	border-color: #26f;
+}
+
+aside .account span {
+	display: block;
+}
+aside .logout span:last-child {
+	text-align: right;
+}
+
+main {
+	padding: 10px;
+}
+
+main > h1 {
+	margin: 0;
+	margin-bottom: 10px;
+}
+
+/* messages */
+.message {
+    margin: 10px 0;
+    padding: 10px;
+    position: relative;
+    color: #222;
+    background: #eee;
+}
+.message pre {
+    overflow: auto;
+}
+.message.success,
+.message.info,
+.message.warning,
+.message.error {
+    padding-left: 40px;
+}
+.message.success:before,
+.message.info:before,
+.message.warning:before,
+.message.error:before {
+    top: 50%;
+    left: 0;
+    margin-top: -10px;
+    line-height: 20px;
+    width: 40px;
+    position: absolute;
+    text-align: center;
+    font: normal normal normal 20px/1 FontAwesome;
+}
+.message.success {
+    color: #223205;
+    background: #f2ffdb;
+}
+.message.success:before {
+    content: "\f058"; /* fa-check-circle */
+}
+.message.info {
+    color: #143447;
+    background: #ebfaff;
+}
+.message.info:before {
+    content: "\f05a"; /* fa-info-circle */
+}
+.message.warning {
+    color: #150c03;
+    background: #ffeddc;
+}
+.message.warning:before {
+    content: "\f071"; /* fa-warning */
+}
+.message.error {
+    color: #390a0a;
+    background: #ffefef;
+}
+.message.error:before {
+    content: "\f057"; /* fa-times-circle */
+}

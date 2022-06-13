@@ -1,0 +1,11 @@
+{% extends "common.html" %}{% load i18n %}{% load static %}
+
+{% block title %}500, erreur non gérée{% endblock %}
+
+{% block main %}
+	<p class="message error">
+		Une erreur non gérée a été rencontrée dans l'application.<br/>
+		Un email a été envoyé aux administrateurs.
+	</p>
+	<p><a href="/">← Retourner à la page d'accueil</a></p>
+{% endblock %}

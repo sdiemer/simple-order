@@ -1,0 +1,18 @@
+{% load i18n %}{% load static %}<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{{ site_title }} - {% block wtitle %}{% endblock %}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<link rel="shortcut icon" href="{% static 'simple_order/img/favicon.svg' %}?_=1"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'simple_order/fa/font-awesome.min.css' %}?_=1"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'simple_order/css/base.css' %}?_=1"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'simple_order/css/table.css' %}?_=1"/>
+
+	{% block head %}{% endblock %}
+</head>
+
+<body>
+	{% block body %}{% endblock %}
+</body>
+</html>

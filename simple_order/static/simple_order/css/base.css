@@ -1,0 +1,29 @@
+html {
+    background: #fff;
+    color: #000;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+html, body, div, table, h1, h2, h3, h4, tr, th, td, img, ul, ol, li, form, pre { margin: 0; padding: 0; }
+
+a {       color: #26f; text-decoration: none; }
+a:hover { color: #48f; text-decoration: underline; }
+
+img { vertical-align: middle; border: 0 none; }
+
+fieldset { border: 1px solid #666; border-radius: 5px; display: inline-block; }
+
+iframe { border: 0 none; }
+
+textarea { max-width: 100%; }
+
+.sr-only { display: none; }
+.text-right { text-align: right; }
+.inline { display: inline; }
+.marged { margin-left: 30px; }
+
+.big-form label { margin-bottom: 5px; display: block; }
+.big-form input,
+.big-form textarea,
+.big-form select { margin-left: 20px; }

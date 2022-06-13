@@ -1,0 +1,11 @@
+{% extends "common.html" %}{% load i18n %}{% load static %}
+
+{% block title %}{% if form.instance.id %}Produit #{{ form.instance.id }}{% else %}Ajouter un produit{% endif %}{% endblock %}
+
+{% block main %}
+	<form method="post" action="." class="big-form">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit">Sauvegarder les modfications</button>
+	</form>
+{% endblock %}
