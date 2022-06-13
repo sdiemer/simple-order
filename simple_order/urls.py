@@ -20,7 +20,7 @@ urlpatterns = [
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT, 'show_indexes': settings.DEBUG}, name='media'),
     # Django admin
     re_path(r'^admin/', admin.site.urls, name='admin'),
-    re_path(r'^', RedirectView.as_view(url='/commandes/', permanent=False, query_string=True)),
+    re_path(r'^$', RedirectView.as_view(url='/commandes/', permanent=False, query_string=True)),
 ]
 
 # test pages
