@@ -4,7 +4,7 @@
 
 {% block main %}
 	{% if delivery %}
-		<div>
+		<div class="no-print">
 			<fieldset>
 				<form method="get" action="." class="inline">
 					{{ delivery_form }}
@@ -17,7 +17,7 @@
 			<br/>
 			<br/>
 		</div>
-		<div>
+		<div class="no-print">
 			<a href="{% url 'order_add' %}">Ajouter une commande</a>
 			<br/>
 			<br/>
@@ -30,7 +30,7 @@
 						<th>Client</th>
 						<th>Produits commandés</th>
 						<th>Prix total</th>
-						<th></th>
+						<th class="no-print"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -46,7 +46,7 @@
 								{% endif %}
 							</td>
 							<td class="text-right">{{ order.total_price }} €</td>
-							<td>
+							<td class="no-print">
 								<a href="{% url 'order_invoice' order.id %}">Facture</a>
 								<form method="delete" action="{{ order.get_absolute_url }}" class="inline">
 									{% csrf_token %}
@@ -61,7 +61,7 @@
 						<td colspan="2"></td>
 						<th class="text-right">Total</th>
 						<th class="text-right">{{ delivery.total_price }} €</th>
-						<td></td>
+						<td class="no-print"></td>
 					</tr>
 				</tfoot>
 			</table>

@@ -3,7 +3,7 @@
 {% block title %}Livraisons{% endblock %}
 
 {% block main %}
-	<div>
+	<div class="no-print">
 		<a href="{% url 'delivery_add' %}">Ajouter une livraison</a>
 		<br/>
 		<br/>
@@ -14,7 +14,7 @@
 				<tr>
 					<th title="Identifiant de livraison">Id</th>
 					<th>Date de livraison</th>
-					<th></th>
+					<th class="no-print"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -22,7 +22,7 @@
 					<tr>
 						<td><a href="{{ delivery.get_absolute_url }}">#{{ delivery.id }}</a></td>
 						<td>{{ delivery.delivery_date }}</td>
-						<td>
+						<td class="no-print">
 							<a href="{% url 'delivery_summary' delivery.id %}">Résumé</a>
 							<form method="delete" action="{{ delivery.get_absolute_url }}" class="inline">
 								{% csrf_token %}

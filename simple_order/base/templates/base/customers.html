@@ -3,7 +3,7 @@
 {% block title %}Clients{% endblock %}
 
 {% block main %}
-	<div>
+	<div class="no-print">
 		<a href="{% url 'customer_add' %}">Ajouter un client</a>
 		<br/>
 		<br/>
@@ -16,7 +16,7 @@
 					<th>Name</th>
 					<th>Addresse</th>
 					<th>Téléphone</th>
-					<th></th>
+					<th class="no-print"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -26,7 +26,7 @@
 						<td>{{ customer.name }}</td>
 						<td>{{ customer.address }}</td>
 						<td>{{ customer.phone }}</td>
-						<td>
+						<td class="no-print">
 							<form method="delete" action="{{ customer.get_absolute_url }}" class="inline">
 								{% csrf_token %}
 								<button type="submit" title="Supprimer"><i class="fa fa-trash"></i></button>

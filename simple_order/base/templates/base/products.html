@@ -3,7 +3,7 @@
 {% block title %}Produits{% endblock %}
 
 {% block main %}
-	<div>
+	<div class="no-print">
 		<a href="{% url 'product_add' %}">Ajouter un produit</a>
 		<br/>
 		<br/>
@@ -15,7 +15,7 @@
 				<th>Label</th>
 				<th>Prix</th>
 				<th>Disponible</th>
-				<th></th>
+				<th class="no-print"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -25,7 +25,7 @@
 					<td>{{ product.label }}</td>
 					<td class="text-right">{{ product.price }} €</td>
 					<td class="text-right"><i class="fa {{ product.available|yesno:'fa-check,fa-close' }}"></i></td>
-					<td>
+					<td class="no-print">
 						<form method="delete" action="{{ product.get_absolute_url }}" class="inline">
 							{% csrf_token %}
 							<button type="submit" title="Supprimer"><i class="fa fa-trash"></i></button>

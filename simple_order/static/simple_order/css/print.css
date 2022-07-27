@@ -1,0 +1,18 @@
+/* Print style */
+html {
+    margin: 10px;
+}
+
+body > header,
+body > aside,
+body > footer {
+    display: none;
+}
+
+body {
+    margin: 0;
+}
+
+.no-print {
+    display: none !important;
+}

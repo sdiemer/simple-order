@@ -93,7 +93,7 @@ class Delivery(BaseModel):
         total = 0
         for order in self.order_set.all():
             total += order.total_price()
-        return total
+        return round(total, 2)
 
 
 class OrderManager(dj_models.Manager):
@@ -125,7 +125,7 @@ class Order(BaseModel):
         total = 0
         for op in self.orderedproduct_set.all():
             total += op.quantity * op.product.price
-        return total
+        return round(total, 2)
 
 
 class OrderedProductManager(dj_models.Manager):
@@ -146,4 +146,4 @@ class OrderedProduct(BaseModel):
         unique_together = ('order', 'product')
 
     def total_price(self):
-        return self.quantity * self.product.price
+        return round(self.quantity * self.product.price, 2)

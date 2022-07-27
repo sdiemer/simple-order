@@ -130,7 +130,7 @@ def delivery_summary(request, pk):
     return render(request, 'base/delivery_summary.html', {
         'delivery': delivery,
         'ordered': ordered,
-        'total': total,
+        'total': round(total, 2),
     })
 
 
