@@ -136,6 +136,17 @@ def delivery_summary(request, pk):
     })
 
 
+def delivery_details(request, pk):
+    delivery = get_object_or_404(models.Delivery, id=pk) if pk else None
+
+    orders = delivery.order_set.all()
+
+    return render(request, 'base/delivery_details.html', {
+        'delivery': delivery,
+        'orders': orders,
+    })
+
+
 @login_required
 def orders(request):
     deliveries = models.Delivery.objects.all()

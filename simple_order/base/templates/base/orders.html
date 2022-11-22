@@ -12,6 +12,7 @@
 				</form>
 				<a href="{{ delivery.get_absolute_url }}" class="marged">Modifier la livraison</a>
 				<a href="{% url 'delivery_summary' delivery.id %}" class="marged">Résumé de la livraison</a>
+				<a href="{% url 'delivery_details' delivery.id %}" class="marged">Détails de la livraison</a>
 				<a href="{% url 'delivery_add' %}" class="marged">Ajouter une livraison</a>
 			</fieldset>
 			<br/>

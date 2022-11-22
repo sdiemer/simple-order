@@ -1,0 +1,62 @@
+{% extends "base.html" %}{% load i18n %}{% load static %}
+
+{% block wtitle %}Détails de la livraison #{{ delivery.id }}{% endblock %}
+
+{% block head %}
+	<style type="text/css">
+		html,
+		fieldset > div {
+			margin: 10px;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+	<main>
+		<h1>Livraison {{ delivery.id }}</h1>
+		<div>Date : {{ delivery.delivery_date|date:'Y-m-d' }}</div>
+		<br/>
+		{% if orders %}
+			{% for order in orders %}
+				{% if order.orderedproduct_set.all %}
+					<fieldset>
+						<legend>#{{ order.id }} - <b>{{ order.customer.name }}</b></legend>
+						{% if order.customer.address %}<div>{{ order.customer.address }}</div>{% endif %}
+						<div>
+							<table>
+								<thead>
+									<tr>
+										<th>Article</th>
+										<th>Quantité</th>
+										<th class="text-right">Prix</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for op in order.orderedproduct_set.all %}
+										<tr>
+											<td>{{ op.product.label }}</td>
+											<td>{{ op.quantity }}</td>
+											<td class="text-right">{{ op.total_price }} €</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+								<tfoot>
+									<tr>
+										<th colspan="2" class="text-right">Total</th>
+										<th class="text-right">{{ order.total_price }} €</th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</fieldset>
+					<br/>
+					<br/>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+			<div>
+				<i>Aucune commande pour cette livraison.</i>
+			</div>
+		{% endif %}
+	</main>
+{% endblock %}

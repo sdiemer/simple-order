@@ -18,6 +18,7 @@ urlpatterns = [
     re_path(r'^livraisons/ajouter/$', views.delivery, name='delivery_add'),
     re_path(r'^livraisons/(?P<pk>\d+)/$', views.delivery, name='delivery'),
     re_path(r'^livraisons/(?P<pk>\d+)/recapitulatif/$', views.delivery_summary, name='delivery_summary'),
+    re_path(r'^livraisons/(?P<pk>\d+)/details/$', views.delivery_details, name='delivery_details'),
     re_path(r'^commandes/$', views.orders, name='orders'),
     re_path(r'^commandes/ajouter/$', views.order, name='order_add'),
     re_path(r'^commandes/(?P<pk>\d+)/$', views.order, name='order'),
