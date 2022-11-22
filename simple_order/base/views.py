@@ -126,6 +126,8 @@ def delivery_summary(request, pk):
             ordered[label]['quantity'] += quantity
             ordered[label]['total'] += amount
         total += amount
+    for order in ordered.values():
+        order['total'] = round(order['total'], 2)
 
     return render(request, 'base/delivery_summary.html', {
         'delivery': delivery,
