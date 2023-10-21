@@ -2,54 +2,42 @@ DOCKER_IMAGE_NAME ?= django-docker-dev
 PROJECT_PORT ?= 8500
 
 lint:
-ifndef IN_FLAKE8
-	docker run -v ${CURDIR}:/apps registry.ubicast.net/docker/flake8:latest make lint_python
-else
-	flake8 .
-endif
+	docker run -v ${CURDIR}:/apps registry.ubicast.net/docker/flake8:latest flake8 .
 
 deadcode:
-ifndef IN_VULTURE
-	docker run -v ${CURDIR}:/apps registry.ubicast.net/docker/vulture:latest make deadcode
-else
-	vulture --exclude docker/,submodules/ --min-confidence 90 --ignore-names user_modified,hints,fk_name,modeladmin,perm,perm_list,startloc .
-endif
+	docker run -v ${CURDIR}:/apps registry.ubicast.net/docker/vulture:latest \
+		vulture --exclude *settings.py,*config.py,docker/,submodules/,logs/,data/ --min-confidence 90 --ignore-names user_modified,hints,fk_name,modeladmin .
 
 test:
-ifndef DOCKER
-	docker run --rm -e "PYTEST_ARGS=${PYTEST_ARGS}" -v ${CURDIR}:/opt/src ${DOCKER_IMAGE_NAME} make test
-else
+	docker run --rm -e "PYTEST_ARGS=${PYTEST_ARGS}" -v ${CURDIR}:/opt/src ${DOCKER_IMAGE_NAME} make test_local
+
+test_local:
 	pytest --reuse-db --cov=simple_order ${PYTEST_ARGS}
-endif
 
 run:
-ifndef DOCKER
-	docker run --rm -it -e DOCKER=1 -v ${CURDIR}:/opt/src -p ${PROJECT_PORT}:${PROJECT_PORT} ${DOCKER_IMAGE_NAME} make run
-else
+	docker run --rm -it -v ${CURDIR}:/opt/src -p ${PROJECT_PORT}:${PROJECT_PORT} ${DOCKER_IMAGE_NAME} make run_local
+
+run_local:
 	bash docker/prepare.sh
 	python3 simple_order/manage.py runserver 0.0.0.0:${PROJECT_PORT}
-endif
 
 shell:
-ifndef DOCKER
-	docker run --rm -it -e DOCKER=1 -v ${CURDIR}:/opt/src -p ${PROJECT_PORT}:${PROJECT_PORT} ${DOCKER_IMAGE_NAME} make shell
-else
+	docker run --rm -it -v ${CURDIR}:/opt/src ${DOCKER_IMAGE_NAME} make shell_local
+
+shell_local:
 	bash docker/prepare.sh
 	bash
-endif
 
 django_shell:
-ifndef DOCKER
-	docker run --rm -it -e DOCKER=1 -v ${CURDIR}:/opt/src ${DOCKER_IMAGE_NAME} make django_shell
-else
+	docker run --rm -it -v ${CURDIR}:/opt/src ${DOCKER_IMAGE_NAME} make shell_local_local
+
+shell_local_local:
 	bash docker/prepare.sh
 	python3 simple_order/manage.py shell
-endif
 
 django_makemigrations:
-ifndef DOCKER
-	docker run --rm -it -e DOCKER=1 -v ${CURDIR}:/opt/src ${DOCKER_IMAGE_NAME} make django_makemigrations
-else
+	docker run --rm -it -v ${CURDIR}:/opt/src ${DOCKER_IMAGE_NAME} make django_makemigrations_local
+
+django_makemigrations_local:
 	bash docker/prepare.sh
 	python3 simple_order/manage.py makemigrations
-endif
