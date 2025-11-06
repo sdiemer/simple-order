@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 import datetime
 import logging
 
@@ -118,7 +116,12 @@ def delivery_summary(request, pk):
 
     ordered = {}
     total = 0
-    for label, price, quantity in models.OrderedProduct.objects.filter(order__delivery=delivery).order_by('product__label').values_list('product__label', 'product__price', 'quantity'):
+    for label, price, quantity in (
+        models.OrderedProduct.objects
+        .filter(order__delivery=delivery)
+        .order_by('product__label')
+        .values_list('product__label', 'product__price', 'quantity')
+    ):
         amount = quantity * price
         if label not in ordered:
             ordered[label] = {'label': label, 'price': price, 'quantity': quantity, 'total': amount}
@@ -168,7 +171,9 @@ def orders(request):
         delivery = None
         orders = []
 
-    delivery_form = forms.DeliverySelectionForm(initial={'date': delivery.delivery_date.strftime('%Y-%m-%d') if delivery else None})
+    delivery_form = forms.DeliverySelectionForm(
+        initial={'date': delivery.delivery_date.strftime('%Y-%m-%d') if delivery else None}
+    )
 
     return render(request, 'base/orders.html', {
         'delivery': delivery,

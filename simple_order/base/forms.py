@@ -1,13 +1,8 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-import logging
 import re
 
 from django import forms as dj_forms
 
 from simple_order.base import models
-
-logger = logging.getLogger(__name__)
 
 
 class DateInput(dj_forms.DateInput):
@@ -29,7 +24,10 @@ class ProductForm(dj_forms.ModelForm):
 
 
 class DeliverySelectionForm(dj_forms.Form):
-    date = dj_forms.ChoiceField(label='Livraison du', required=True, widget=dj_forms.Select(attrs={'onchange': 'this.form.submit()'}))
+    date = dj_forms.ChoiceField(
+        label='Livraison du', required=True,
+        widget=dj_forms.Select(attrs={'onchange': 'this.form.submit()'})
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -62,7 +60,12 @@ class OrderForm(dj_forms.ModelForm):
             for op in self.instance.orderedproduct_set.all():
                 current_ops[op.product_id] = op.quantity
         for product in models.Product.objects.filter(available=True):
-            self.fields[f'product-{product.id}'] = dj_forms.IntegerField(label=product.label, required=True, initial=current_ops.get(product.id, 0), min_value=0)
+            self.fields[f'product-{product.id}'] = dj_forms.IntegerField(
+                label=product.label,
+                required=True,
+                initial=current_ops.get(product.id, 0),
+                min_value=0
+            )
 
     def save(self, *args, **kwargs):
         result = super().save(*args, **kwargs)

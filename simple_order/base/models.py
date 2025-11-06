@@ -1,13 +1,8 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-import logging
 import re
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models as dj_models
-
-logger = logging.getLogger('simple_order.base.models')
 
 
 def phone_validator(val):
@@ -98,7 +93,12 @@ class Delivery(BaseModel):
 
 class OrderManager(dj_models.Manager):
     def get_queryset(self):
-        return super().get_queryset().select_related('delivery').select_related('customer').prefetch_related('orderedproduct_set')
+        return (
+            super().get_queryset()
+            .select_related('delivery')
+            .select_related('customer')
+            .prefetch_related('orderedproduct_set')
+        )
 
 
 class Order(BaseModel):

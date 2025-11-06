@@ -1,0 +1,14 @@
+[Unit]
+Description=simple-order main service
+After=network-online.target
+
+[Service]
+Type=forking
+EnvironmentFile=/etc/environment
+ExecStart=/opt/simple-order/venv/bin/simple-order-control start
+ExecStop=/opt/simple-order/venv/bin/simple-order-control stop
+ExecReload=/opt/simple-order/venv/bin/simple-order-control reload
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
